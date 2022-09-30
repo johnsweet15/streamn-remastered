@@ -7,23 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../state';
 import { RootState } from '../state/reducers';
-import { useEffect } from 'react';
+import GoogleLogin from '../components/googleLogin';
 
 const Home: NextPage = () => {
   const state = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
-  const { setUser, updateUser } = bindActionCreators(actionCreators, dispatch);
-
-  useEffect(() => {
-    console.log(state);
-    setUser({
-      username: 'john',
-      email: 'john@buhguh.com',
-      profileId: '2716387126',
-    });
-    console.log(state);
-  }, []);
+  const { setUser } = bindActionCreators(actionCreators, dispatch);
 
   return (
     <div className={styles.container}>
@@ -38,17 +28,7 @@ const Home: NextPage = () => {
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>
 
-        <button
-          onClick={() =>
-            setUser({
-              username: 'john',
-              email: 'john@buhguh.com',
-              profileId: '2716387126',
-            })
-          }
-        >
-          Click me
-        </button>
+        <GoogleLogin />
 
         <p className={styles.description}>
           Get started by editing{' '}
