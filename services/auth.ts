@@ -1,12 +1,13 @@
 // import { MovieDetails, PopularMoviesResult, TMDBResponse } from '../interfaces/tmdb';
 import Request from './request';
 import { AxiosResponse, AxiosError } from 'axios';
+import { LoginResponse } from '../interfaces/responses';
 
 const request = new Request();
 
 export const googleLogin = (
   tokenId: string
-): Promise<[AxiosResponse | null, AxiosError | null]> => {
+): Promise<[AxiosResponse<LoginResponse> | null, AxiosError | null]> => {
   return request.post('/login/google', { idToken: tokenId });
 };
 
