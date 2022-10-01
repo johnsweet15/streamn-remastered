@@ -1,0 +1,47 @@
+@import '../../styles/theme.scss';
+
+.input {
+  padding: 14px;
+  font-size: $fontSizeMedium;
+  background-color: $darkGray;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  display: block;
+  font-family: $fontFamily;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 3px 1px $blue;
+  }
+}
+
+.input ~ .span {
+  position: absolute;
+  top: 13px;
+  left: 16px;
+  cursor: text;
+  pointer-events: none;
+  font-size: $fontSizeNormal;
+  margin: 0;
+}
+
+.container {
+  display: block;
+  position: relative;
+  margin: 40px 0;
+}
+
+.error {
+  color: $errorColor;
+  font-size: $fontSizeSmall;
+  margin-top: 8px;
+}
+
+.errorBorder {
+  border: solid 1px $errorColor;
+}
+
+.required {
+  color: $errorColor;
+}

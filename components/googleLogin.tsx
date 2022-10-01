@@ -2,7 +2,11 @@ import GoogleLoginButton, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from 'react-google-login';
-import { API_URL, GOOGLE_CLIENT_ID, GOOGLE_COOKIE_POLICY } from '../config';
+import {
+  API_URL,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_COOKIE_POLICY,
+} from '../config/config';
 import { googleLogin } from '../services/auth';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';

@@ -4,7 +4,7 @@ import axios, {
   AxiosError,
   AxiosInstance,
 } from 'axios';
-import { API_URL } from '../config';
+import { API_URL } from '../config/config';
 
 export default class Request {
   private service: AxiosInstance;
