@@ -10,7 +10,15 @@
   background-color: $backgroundColorPrimary;
   padding: 2rem;
 
-  li {
-    list-style: none;
+  ul {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+    justify-content: space-between;
+
+    li {
+      list-style: none;
+    }
   }
 }

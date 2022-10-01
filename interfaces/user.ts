@@ -10,7 +10,6 @@ export interface Profile {
   username: string;
 }
 
-export interface User extends Profile {}
 export interface ProfileSession {
   connectedLobbies: Lobby[];
   profileId: string;
@@ -24,3 +23,6 @@ export interface Lobby {
   lobbyName: string;
   lobbyOwner?: string;
 }
+
+export interface User extends Profile {}
+export type UserState = User | {};

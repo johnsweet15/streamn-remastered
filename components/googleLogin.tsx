@@ -30,7 +30,6 @@ const GoogleLogin = () => {
           setUser(data.profile);
           const { profileId, sessionToken, sessionExpirationTS } =
             data.profileSession;
-          console.log(profileId, sessionToken, sessionExpirationTS);
           setCookies(
             { profileId: profileId },
             { sessionToken: sessionToken },

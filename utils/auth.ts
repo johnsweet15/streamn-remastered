@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { isNil, findKey } from 'lodash';
+import { isNil } from 'lodash';
 
 export const isUserLoggedIn = () => {};
 
@@ -53,10 +53,9 @@ export const getCookies = () => {
  * @returns Whether true if all cookies exist and the sessionToken has not expired. False otherwise.
  */
 export const validateSignInCookies = (
-  profileId: string,
-  sessionToken: string,
-  sessionExpirationTS: string,
-  lobbyVolume: string
+  profileId: string | undefined,
+  sessionToken: string | undefined,
+  sessionExpirationTS: string | undefined
 ) => {
   let isSessionExpirationTsValid = false;
   const now = moment().format();
@@ -71,10 +70,7 @@ export const validateSignInCookies = (
     }
   }
   return (
-    !isNil(profileId) &&
-    !isNil(sessionToken) &&
-    isSessionExpirationTsValid &&
-    !isNil(lobbyVolume)
+    !isNil(profileId) && !isNil(sessionToken) && isSessionExpirationTsValid
   );
 };
 
