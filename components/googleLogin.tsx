@@ -2,13 +2,14 @@ import GoogleLoginButton, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from 'react-google-login';
-import { API_URL, GOOGLE_CLIENT_ID } from '../config';
+import { API_URL, GOOGLE_CLIENT_ID, GOOGLE_COOKIE_POLICY } from '../config';
 import { googleLogin } from '../services/auth';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../state';
 import { useRouter } from 'next/router';
-import { setCookies } from '../utils/auth';
+import { logout, setCookies } from '../utils/auth';
+import Button from './button';
 
 const GoogleLogin = () => {
   const router = useRouter();
@@ -20,13 +21,15 @@ const GoogleLogin = () => {
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     if ('tokenId' in res) {
-      // TODO error handling
-      const [response] = await googleLogin(res.tokenId);
+      const [response, error] = await googleLogin(res.tokenId);
       const data = response?.data;
       if (data) {
+        // first time user
         if (!data.accExist) {
           router.push('/sign-up');
-        } else {
+        }
+        // existing user
+        else {
           setUser(data.profile);
           const { profileId, sessionToken, sessionExpirationTS } =
             data.profileSession;
@@ -36,6 +39,10 @@ const GoogleLogin = () => {
             { sessionExpirationTS: sessionExpirationTS }
           );
         }
+      } else if (error) {
+        logout();
+        router.push('/');
+        router.reload();
       }
       // TODO idk do something here?
     } else {
@@ -50,10 +57,14 @@ const GoogleLogin = () => {
   return (
     <GoogleLoginButton
       clientId={GOOGLE_CLIENT_ID}
-      buttonText='Login'
       onSuccess={onLoginSuccess}
       onFailure={onLoginFailure}
-      cookiePolicy={'single_host_origin'}
+      cookiePolicy={GOOGLE_COOKIE_POLICY}
+      render={(renderProps) => (
+        <Button onClick={renderProps.onClick} disabled={renderProps.disabled}>
+          Login
+        </Button>
+      )}
       redirectUri={API_URL}
     />
   );

@@ -3,13 +3,15 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Navbar from '../components/navbar/navbar';
 import { useEffect } from 'react';
-import { getCookies, validateSignInCookies } from '../utils/auth';
+import { getCookies, logout, validateSignInCookies } from '../utils/auth';
 import { getUserData } from '../services/user';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../state';
+import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { setUser } = bindActionCreators(actionCreators, dispatch);
 
@@ -17,6 +19,12 @@ const Home: NextPage = () => {
     authenticate();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  /**
+   * Get profileId, sessionToken, sessionExpirationTS from cookies.
+   * Check cookies are valid.
+   * Valid => Send request to get user data.
+   * Invalid => Remove all cookies and refresh.
+   */
   const authenticate = async () => {
     const { profileId, sessionToken, sessionExpirationTS } = getCookies();
     if (
@@ -27,6 +35,10 @@ const Home: NextPage = () => {
       const [response, error] = await getUserData(profileId, sessionToken);
       if (response?.data) {
         setUser(response.data);
+      }
+      if (error) {
+        logout();
+        router.reload();
       }
     }
   };

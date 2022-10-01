@@ -1,7 +1,16 @@
 import moment from 'moment';
 import { isNil } from 'lodash';
+import { Cookies } from 'react-cookie';
 
 export const isUserLoggedIn = () => {};
+
+export const logout = () => {
+  const cookie = new Cookies();
+  cookie.remove('profileId');
+  cookie.remove('sessionToken');
+  cookie.remove('sessionExpirationTS');
+  sessionStorage.clear();
+};
 
 /**
  *
@@ -49,8 +58,7 @@ export const getCookies = () => {
  * @param profileId
  * @param sessionToken
  * @param sessionExpirationTS
- * @param lobbyVolume
- * @returns Whether true if all cookies exist and the sessionToken has not expired. False otherwise.
+ * @returns True if all cookies exist and the sessionToken has not expired. False otherwise.
  */
 export const validateSignInCookies = (
   profileId: string | undefined,
@@ -86,7 +94,6 @@ type Cookie = {
 export const setCookies = (...args: Cookie[]) => {
   args.forEach((cookie) => {
     const key = Object.keys(cookie)[0];
-    console.log(key, cookie[key]);
     document.cookie = `${key}=${cookie[key]};max-age=${3600 * 24}`;
   });
 };
