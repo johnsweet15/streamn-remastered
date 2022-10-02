@@ -7,7 +7,7 @@ import {
   GOOGLE_CLIENT_ID,
   GOOGLE_COOKIE_POLICY,
 } from '../config/config';
-import { googleLogin } from '../services/auth';
+import { googleLoginRequest } from '../services/auth';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../state';
@@ -25,7 +25,7 @@ const GoogleLogin = () => {
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     if ('tokenId' in res) {
-      const [response, error] = await googleLogin(res.tokenId);
+      const [response, error] = await googleLoginRequest(res.tokenId);
       const data = response?.data;
       if (data) {
         // first time user

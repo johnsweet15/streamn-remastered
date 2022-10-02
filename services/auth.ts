@@ -11,7 +11,7 @@ const request = new Request();
  * @param tokenId Google token
  * @returns
  */
-export const googleLogin = (
+export const googleLoginRequest = (
   tokenId: string
 ): Promise<[AxiosResponse<LoginResponse> | null, AxiosError | null]> => {
   return request.post('/login/google', { idToken: tokenId });
@@ -22,7 +22,7 @@ export const googleLogin = (
  * @param body Create account body
  * @returns
  */
-export const createAccount = (
+export const createAccountRequest = (
   body: CreateAccountRequest
 ): Promise<
   [AxiosResponse<CreateAccountResponse> | null, AxiosError | null]

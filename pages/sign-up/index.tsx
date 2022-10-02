@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import Input from '../../components/input/input';
 import { LoginResponse } from '../../interfaces/responses';
-import { createAccount } from '../../services/auth';
+import { createAccountRequest } from '../../services/auth';
 import { useRouter } from 'next/router';
 import Button from '../../components/button';
 import { setCookies } from '../../utils/auth';
@@ -36,9 +36,9 @@ const SignUp: NextPage = () => {
     return userData;
   };
 
-  const createNewAccount = async () => {
+  const createAccount = async () => {
     if (email && googleId) {
-      const [response, error] = await createAccount({
+      const [response, error] = await createAccountRequest({
         email: email,
         googleId: googleId,
         username: username,
@@ -80,7 +80,7 @@ const SignUp: NextPage = () => {
         onChange={(event) => setUsername(event.target.value)}
         value={username}
       />
-      <Button onClick={() => createNewAccount()}>Create Account</Button>
+      <Button onClick={() => createAccount()}>Create Account</Button>
     </div>
   );
 };
