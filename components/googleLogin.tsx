@@ -30,6 +30,7 @@ const GoogleLogin = () => {
       if (data) {
         // first time user
         if (!data.accExist) {
+          sessionStorage.setItem('google-info', JSON.stringify(data));
           router.push('/sign-up');
         }
         // existing user
@@ -70,6 +71,7 @@ const GoogleLogin = () => {
         </Button>
       )}
       redirectUri={API_URL}
+      autoLoad={false}
     />
   );
 };

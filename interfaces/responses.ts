@@ -10,3 +10,9 @@ export interface LoginResponse {
   profile: Profile;
   profileSession: ProfileSession;
 }
+
+export interface CreateAccountResponse {
+  profileId: string;
+  profileSession: ProfileSession;
+  success: boolean;
+}

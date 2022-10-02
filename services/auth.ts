@@ -1,13 +1,13 @@
 // import { MovieDetails, PopularMoviesResult, TMDBResponse } from '../interfaces/tmdb';
 import Request from './request';
 import { AxiosResponse, AxiosError } from 'axios';
-import { LoginResponse } from '../interfaces/responses';
+import { CreateAccountResponse, LoginResponse } from '../interfaces/responses';
 import { CreateAccountRequest } from '../interfaces/requests';
 
 const request = new Request();
 
 /**
- * @summary: /login/google
+ * @summary /login/google
  * @param tokenId Google token
  * @returns
  */
@@ -18,12 +18,14 @@ export const googleLogin = (
 };
 
 /**
- * @summary: /profile/createAccount
+ * @summary /profile/createAccount
  * @param body Create account body
  * @returns
  */
 export const createAccount = (
   body: CreateAccountRequest
-): Promise<[AxiosResponse<any> | null, AxiosError | null]> => {
+): Promise<
+  [AxiosResponse<CreateAccountResponse> | null, AxiosError | null]
+> => {
   return request.post('/profile/createAccount', body);
 };

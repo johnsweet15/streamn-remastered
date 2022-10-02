@@ -2,7 +2,7 @@
 
 .input {
   padding: 14px;
-  font-size: $fontSizeMedium;
+  font-size: $fontSizeSmall;
   background-color: $darkGray;
   border: none;
   border-radius: 4px;
@@ -12,8 +12,13 @@
 
   &:focus {
     outline: none;
-    box-shadow: 0px 0px 3px 1px $blue;
+    box-shadow: 0px 0px 3px 1px $colorSecondary;
   }
+}
+
+.input:disabled {
+  color: gray !important;
+  cursor: not-allowed;
 }
 
 .input ~ .span {

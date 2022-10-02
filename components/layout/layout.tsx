@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import Navbar from '../navbar/navbar';
 import { useEffect } from 'react';
 import { getCookies, logout, validateSignInCookies } from '../../utils/auth';
-import { getUserData } from '../../services/user';
+import { getUserDataRequest } from '../../services/user';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../state';
@@ -34,7 +34,10 @@ const Layout = ({ children }: Props) => {
       sessionToken &&
       validateSignInCookies(profileId, sessionToken, sessionExpirationTS)
     ) {
-      const [response, error] = await getUserData(profileId, sessionToken);
+      const [response, error] = await getUserDataRequest(
+        profileId,
+        sessionToken
+      );
       if (response?.data) {
         setUser(response.data);
       }
@@ -44,6 +47,7 @@ const Layout = ({ children }: Props) => {
       }
     }
   };
+
   return (
     <>
       <Navbar />

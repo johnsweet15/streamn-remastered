@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './Input.module.scss';
 import { getVariants } from './input.anim';
 import { REQUIRED_ERROR_MESSAGE } from '../../config/constants';
@@ -16,7 +16,14 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ label, validations, required, onChange }: InputProps) => {
+const Input = ({
+  label,
+  validations,
+  required,
+  onChange,
+  defaultValue,
+  ...props
+}: InputProps) => {
   const [focused, setFocused] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -59,10 +66,16 @@ const Input = ({ label, validations, required, onChange }: InputProps) => {
         onFocus={() => handleFocus(true)}
         onBlur={() => handleFocus(false)}
         onChange={handleChange}
+        defaultValue={defaultValue}
+        {...props}
       />
       <motion.p
         className={styles.span}
-        variants={getVariants(focused, inputValue)}
+        variants={getVariants(
+          focused,
+          inputValue,
+          typeof defaultValue === 'string' ? defaultValue : ''
+        )}
         initial='initial'
         animate='animate'
       >

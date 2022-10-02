@@ -5,7 +5,13 @@ import { User } from '../interfaces/user';
 
 const request = new Request();
 
-export const getUserData = (
+/**
+ * @summary /profile/profile?profileId={profileId}&sessionToken={sessionToken}
+ * @param profileId
+ * @param sessionToken
+ * @returns User profile
+ */
+export const getUserDataRequest = (
   profileId: string,
   sessionToken: string
 ): Promise<[AxiosResponse<User> | null, AxiosError | null]> => {

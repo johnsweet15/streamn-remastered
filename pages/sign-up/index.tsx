@@ -1,10 +1,68 @@
 import { NextPage } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../../components/input/input';
+import { LoginResponse } from '../../interfaces/responses';
+import { createAccount } from '../../services/auth';
+import { useRouter } from 'next/router';
+import Button from '../../components/button';
+import { setCookies } from '../../utils/auth';
+import { getUserDataRequest } from '../../services/user';
+import { useDispatch } from 'react-redux';
+import { actionCreators } from '../../state';
+import { bindActionCreators } from 'redux';
 
 const SignUp: NextPage = () => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
+  const router = useRouter();
+
+  const dispatch = useDispatch();
+  const { setUser } = bindActionCreators(actionCreators, dispatch);
+
+  const [email, setEmail] = useState<string | undefined>('');
+  const [username, setUsername] = useState<string>('');
+  const [googleId, setGoogleId] = useState<string | undefined>('');
+
+  useEffect(() => {
+    const userData = getUserData();
+    setEmail(userData?.googleEmail);
+    setGoogleId(userData?.googleId);
+  }, []);
+
+  const getUserData = (): LoginResponse | null => {
+    const googleInfo = sessionStorage.getItem('google-info');
+    let userData: LoginResponse | null = null;
+    if (googleInfo) {
+      userData = JSON.parse(googleInfo);
+    }
+    return userData;
+  };
+
+  const createNewAccount = async () => {
+    if (email && googleId) {
+      const [response, error] = await createAccount({
+        email: email,
+        googleId: googleId,
+        username: username,
+      });
+      if (response?.status === 200) {
+        const { profileId, sessionToken, sessionExpirationTS } =
+          response.data.profileSession;
+        setCookies(
+          { profileId: profileId },
+          { sessionToken: sessionToken },
+          { sessionExpirationTS: sessionExpirationTS }
+        );
+        const [userDataResponse, error] = await getUserDataRequest(
+          profileId,
+          sessionToken
+        );
+        if (userDataResponse?.data) {
+          setUser(userDataResponse.data);
+        }
+
+        router.push('/');
+      }
+    }
+  };
 
   return (
     <div style={{ padding: 40 }}>
@@ -13,7 +71,8 @@ const SignUp: NextPage = () => {
         label='Email'
         required
         onChange={(event) => setEmail(event.target.value)}
-        value={email}
+        defaultValue={email}
+        disabled
       />
       <Input
         label='Username'
@@ -21,6 +80,7 @@ const SignUp: NextPage = () => {
         onChange={(event) => setUsername(event.target.value)}
         value={username}
       />
+      <Button onClick={() => createNewAccount()}>Create Account</Button>
     </div>
   );
 };
