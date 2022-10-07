@@ -22,6 +22,7 @@ const Navbar = () => {
       <ul>
         <li>
           <Link href='/'>Streamn</Link>
+          <Link href='/lobby/Alex%20🅱%EF%B8%8Fones'>Test Lobby</Link>
         </li>
         <li id={styles.googleButton}>
           {user?.profileId ? (

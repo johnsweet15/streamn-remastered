@@ -10,8 +10,7 @@ export default class Request {
   private service: AxiosInstance;
 
   constructor() {
-    const apiKey = process.env.NEXT_PUBLIC_TMDB_TOKEN;
-    const params = apiKey ? { api_key: apiKey } : null;
+    const params = null;
     this.service = axios.create({
       baseURL: API_URL,
       params,

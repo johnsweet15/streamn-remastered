@@ -1,3 +1,4 @@
+import { Lobby } from './lobby';
 import { Profile, ProfileSession } from './user';
 
 export interface LoginResponse {
@@ -15,4 +16,14 @@ export interface CreateAccountResponse {
   profileId: string;
   profileSession: ProfileSession;
   success: boolean;
+}
+
+export interface JoinRoomResponse {
+  requestId: string;
+  room: string;
+}
+
+export interface LobbyConnectionResponse {
+  lobby: Lobby;
+  videoStartTime?: string;
 }

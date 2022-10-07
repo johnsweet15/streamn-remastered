@@ -1,24 +1,24 @@
 export interface Profile {
-  createdLobbies: Lobby[];
+  createdLobbies: LobbySimple[];
   currentPlaylist: string;
   email: string;
-  followedLobbies: Lobby[];
+  followedLobbies: LobbySimple[];
   pictureURL?: string;
   playlists: string[];
   profileId: string;
-  recentLobbies: Lobby[];
+  recentLobbies: LobbySimple[];
   username: string;
 }
 
 export interface ProfileSession {
-  connectedLobbies: Lobby[];
+  connectedLobbies: LobbySimple[];
   profileId: string;
   sessionCreationTS: string;
   sessionExpirationTS: string;
   sessionToken: string;
 }
 
-export interface Lobby {
+export interface LobbySimple {
   lobbyId: string;
   lobbyName: string;
   lobbyOwner?: string;

@@ -58,7 +58,6 @@ const SignUp: NextPage = () => {
         if (userDataResponse?.data) {
           setUser(userDataResponse.data);
         }
-
         router.push('/');
       }
     }
